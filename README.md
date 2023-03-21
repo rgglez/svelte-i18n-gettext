@@ -20,7 +20,7 @@ import { _ } from '$lib/i18n/index.svelte';
 
 * In your HTML code:
 
-```html
+```javascript
 <div>
     {@html $_(`Welcome, <b>${$user.profile.name}</b>`)}
     <br />
