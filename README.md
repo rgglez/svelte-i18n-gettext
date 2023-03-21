@@ -12,11 +12,42 @@ This is a [Svelte](https://svelte.dev/) [derived store](https://learn.svelte.dev
 You can try this software live [here](https://svelte.dev/repl/af093a25e8db40f5b77f9483ccf3919a?version=3.57.0) (the code at REPL has some modifications in order to run there).
 
 * Install the dependencies (see below).
-* Include the store (adjusting your paths):
+* Include the stores (adjusting your paths):
 
 ```javascript
 <script>
+
 import { _ } from '$lib/i18n/index.svelte';
+import { parsedTranslations, lang } from '$lib/i18n/store.js';
+
+// ...
+```
+
+* Include the translation files:
+
+```javascript
+// ...
+
+import msg_de_DE from '$lib/i18n/messages-de.json';
+$parsedTranslations['de-DE'] = msg_de_DE;
+
+import msg_en_US from '$lib/i18n//messages-en.json';
+$parsedTranslations['en-US'] = msg_en_US;
+
+import msg_es_MX from '$lib/i18n//messages-es.json';
+$parsedTranslations['es-MX'] = msg_es_MX;	
+
+// ...
+```
+
+* Optionally, get the browser's language:
+
+```javascript
+// ...
+
+$lang = detectBrowserLanguage();	
+
+// ...
 </script>
 ```
 
@@ -50,7 +81,7 @@ svelte-i18n-gettext depends on the follownig node packages:
 
 * **[node-gettext](https://www.npmjs.com/package/node-gettext)**
 * **[gettext-parser](https://www.npmjs.com/package/gettext-parser)**
-* **[detect-browser-language](https://www.npmjs.com/package/detect-browser-language)**
+* **[detect-browser-language](https://www.npmjs.com/package/detect-browser-language)** (optional)
 
 ## Notes
 
