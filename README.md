@@ -56,8 +56,8 @@ svelte-i18n-gettext depends on the follownig node packages:
 * My PO editor of choice is [poEdit](https://poedit.net/).
 * I've included directories with sample .po and .json files, so, in case you're not familiar with gettext, you can have an idea.
 * Why gettext? 
-  ** Well, first and the most relevant for me: it uses the full strings in the original language as key, so I don't have to be searching for weird keys such as "title_page_hello" or "item.specification".
-  ** It's a GNU standard, tried and trusted.
+  * Well, first and the most relevant for me: it uses the full strings in the original language as key, so I don't have to be searching for weird keys such as "title_page_hello" or "item.specification".
+  * It's a GNU standard, tried and trusted.
   
  ## TODO
  
