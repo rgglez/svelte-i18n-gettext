@@ -96,7 +96,7 @@ svelte-i18n-gettext depends on the follownig node packages:
  
  * Plurals!! 
  
- # License
+ ## License
  
  Copyright (c) 2023, Rodolfo González González.
  
