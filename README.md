@@ -7,7 +7,30 @@
 
 This is a [Svelte](https://svelte.dev/) [derived store](https://learn.svelte.dev/tutorial/derived-stores) which implements translation (i18n) of text messages.
 
-It uses standard [gettext](https://www.gnu.org/software/gettext/) .po files, which are translated into json using the *po2json.cjs* Node.js script. This script is has these parameters:
+## Usage
+
+* Install the dependencies (see below).
+* Include the store (adjusting your paths):
+
+```javascript
+<script>
+import { _ } from '$lib/i18n/index.svelte';
+</script>
+```
+
+* In your HTML code:
+
+```html
+<div>
+    {@html $_(`Welcome, <b>${$user.profile.name}</b>`)}
+    <br />
+    {$_("Good bye.")}
+</div>
+```
+
+## Translation files
+
+svelte-i18n-gettext uses standard [gettext](https://www.gnu.org/software/gettext/) .po files, which are translated into json using the *po2json.cjs* Node.js script. This script is has these parameters:
 
 * *-i, --input <input>* the input PO file.
 * *-o, --output <output>* the output JSON file.
