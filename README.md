@@ -95,6 +95,7 @@ svelte-i18n-gettext depends on the follownig node packages:
  ## TODO
  
  * Plurals!! 
+ * Try it with hundreds or thousands of strings ;)
  
  ## License
  
