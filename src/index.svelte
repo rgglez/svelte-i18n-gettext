@@ -33,9 +33,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import { derived } from 'svelte/store';
 import { parsedTranslations, lang } from '$lib/i18n/stores.js';
 import Gettext from 'node-gettext';
-import detectBrowserLanguage from 'detect-browser-language';
-
-const langDetected = detectBrowserLanguage();
 
 const gt = new Gettext();    
 
