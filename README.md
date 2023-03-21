@@ -5,7 +5,7 @@
 ![GitHub issues](https://img.shields.io/github/issues/rgglez/svelte-i18n-gettext) 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/rgglez/svelte-i18n-gettext)
 
-This is a [Svelte](https://svelte.dev/) [derived store](https://learn.svelte.dev/tutorial/derived-stores) which implements translation (i18n) of text messages.
+This is a [Svelte](https://svelte.dev/) [derived store](https://learn.svelte.dev/tutorial/derived-stores) which implements [gettext](https://www.gnu.org/software/gettext/) based translation (i18n) of strings.
 
 ## Usage
 
@@ -63,7 +63,7 @@ $lang = detectBrowserLanguage();
 
 ## Translation files
 
-svelte-i18n-gettext uses standard [gettext](https://www.gnu.org/software/gettext/) .po files, which must be manually translated into JSON using the *po2json.cjs* Node.js script, which is included in the *bin/* directory. This script is has the following parameters:
+svelte-i18n-gettext uses standard gettext .po files, which must be manually translated into JSON using the *po2json.cjs* Node.js script, which is included in the *bin/* directory. This script is has the following parameters:
 
 * *-i, --input <input>* the input PO file.
 * *-o, --output <output>* the output JSON file.
