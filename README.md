@@ -39,7 +39,7 @@ svelte-i18n-gettext uses standard [gettext](https://www.gnu.org/software/gettext
 For example:
 
 ```bash
-node -i example.po -i example.json -v
+node -i example.po -o example.json -v
 ```
 
 ## Dependencies
