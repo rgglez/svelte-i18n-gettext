@@ -30,7 +30,7 @@ import { _ } from '$lib/i18n/index.svelte';
 
 ## Translation files
 
-svelte-i18n-gettext uses standard [gettext](https://www.gnu.org/software/gettext/) .po files, which are translated into json using the *po2json.cjs* Node.js script. This script is has these parameters:
+svelte-i18n-gettext uses standard [gettext](https://www.gnu.org/software/gettext/) .po files, which must be manually translated into JSON using the *po2json.cjs* Node.js script, which is included in the *bin/* directory. This script is has the following parameters:
 
 * *-i, --input <input>* the input PO file.
 * *-o, --output <output>* the output JSON file.
@@ -44,7 +44,7 @@ node -i example.po -i example.json -v
 
 ## Dependencies
 
-It depends on the follownig node packages:
+svelte-i18n-gettext depends on the follownig node packages:
 
 * **[node-gettext](https://www.npmjs.com/package/node-gettext)**
 * **[gettext-parser](https://www.npmjs.com/package/gettext-parser)**
@@ -52,6 +52,7 @@ It depends on the follownig node packages:
 
 ## Notes
 
+* Of course, you can modify the way of getting the "current language", for instance, you could get it from the user's profile store, or from a cookie, and so on.
 * My PO editor of choice is [poEdit](https://poedit.net/).
 * I've included directories with sample .po and .json files, so, in case you're not familiar with gettext, you can have an idea.
 * Why gettext? 
