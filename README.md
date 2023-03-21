@@ -7,7 +7,7 @@
 
 This is a [Svelte](https://svelte.dev/) [derived store](https://learn.svelte.dev/tutorial/derived-stores) which implements translation (i18n) of text messages.
 
-It uses standard [gettext](https://www.gnu.org/software/gettext/) .po files, which are translated into json using the *po2json.cjs* Node.js script. This script is has this parameters:
+It uses standard [gettext](https://www.gnu.org/software/gettext/) .po files, which are translated into json using the *po2json.cjs* Node.js script. This script is has these parameters:
 
 * *-i, --input <input>* the input PO file.
 * *-o, --output <output>* the output JSON file.
@@ -30,7 +30,17 @@ It depends on the follownig node packages:
 ## Notes
 
 * My PO editor of choice is [poEdit](https://poedit.net/).
+* I've included directories with sample .po and .json files, so, in case you're not familiar with gettext, you can have an idea.
 * Why gettext? 
   ** Well, first and the most relevant for me: it uses the full strings in the original language as key, so I don't have to be searching for weird keys such as "title_page_hello" or "item.specification".
   ** It's a GNU standard, tried and trusted.
-  ** 
+  
+ ## TODO
+ 
+ * Plurals!! 
+ 
+ # License
+ 
+ Copyright (c) 2023, Rodolfo González González.
+ 
+ See the LICENSE file.
