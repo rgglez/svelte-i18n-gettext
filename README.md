@@ -31,10 +31,10 @@ import { parsedTranslations, lang } from '$lib/i18n/store.js';
 import msg_de_DE from '$lib/i18n/messages-de.json';
 $parsedTranslations['de-DE'] = msg_de_DE;
 
-import msg_en_US from '$lib/i18n//messages-en.json';
+import msg_en_US from '$lib/i18n/messages-en.json';
 $parsedTranslations['en-US'] = msg_en_US;
 
-import msg_es_MX from '$lib/i18n//messages-es.json';
+import msg_es_MX from '$lib/i18n/messages-es.json';
 $parsedTranslations['es-MX'] = msg_es_MX;	
 
 // ...
