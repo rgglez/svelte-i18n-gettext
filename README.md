@@ -72,7 +72,7 @@ svelte-i18n-gettext uses standard gettext .po files, which must be manually tran
 For example:
 
 ```bash
-node -i example.po -o example.json -v
+node po2json.cjs -i example.po -o example.json -v
 ```
 
 ## Dependencies
