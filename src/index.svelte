@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import { derived } from 'svelte/store';
-import { parsedTranslations } from '$lib/i18n/stores.js';
+import { parsedTranslations, lang } from '$lib/i18n/stores.js';
 import Gettext from 'node-gettext';
 import detectBrowserLanguage from 'detect-browser-language';
 
@@ -39,10 +39,10 @@ const langDetected = detectBrowserLanguage();
 
 const gt = new Gettext();    
 
-export const _ = derived([user, parsedTranslations], ([$user, $parsedTranslations]) => function(msgid, msgctxt='app', ...a) {
+export const _ = derived([lang, parsedTranslations], ([$lang, $parsedTranslations]) => function(msgid, msgctxt='app', ...a) {
     const gt = new Gettext();
-    gt.addTranslations(langDetected, 'messages', $parsedTranslations[langDetected]);
-    gt.setLocale(langDetected);
+    gt.addTranslations($lang, 'messages', $parsedTranslations[$lang]);
+    gt.setLocale($lang);
     return gt.pgettext(msgctxt, msgid);      
 });
 </script>
