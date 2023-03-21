@@ -9,6 +9,8 @@ This is a [Svelte](https://svelte.dev/) [derived store](https://learn.svelte.dev
 
 ## Usage
 
+You can try this software live [here](https://svelte.dev/repl/af093a25e8db40f5b77f9483ccf3919a?version=3.57.0) (the code at REPL has some modifications in order to run there).
+
 * Install the dependencies (see below).
 * Include the store (adjusting your paths):
 
