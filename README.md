@@ -99,6 +99,6 @@ svelte-i18n-gettext depends on the follownig node packages:
  
  ## License
  
- Copyright (c) 2023, Rodolfo González González.
+ Copyright (c) 2023 Rodolfo González González.
  
- See the LICENSE file.
+ Read the LICENSE file.
