@@ -1,6 +1,7 @@
 {
   "name": "svelte-i18n-gettext",
-  "version": "1.0.3",
+  "type": "module",
+  "version": "1.0.4",
   "description": "Translations (i18n) for Svelte, using gettext.",
   "main": "src/index.svelte",
   "directories": {
