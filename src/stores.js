@@ -33,4 +33,3 @@ import { writable } from 'svelte/store';
 
 export const lang = writable("es-MX");
 export const parsedTranslations = writable([]);
-

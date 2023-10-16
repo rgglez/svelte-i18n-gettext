@@ -31,6 +31,10 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/*
+This program converts a .po file into a .json file suitable for JS.
+*/
+
 const { program } = require('commander');
 const gettextParser = require('gettext-parser');
 const fs = require('fs');
