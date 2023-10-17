@@ -31,5 +31,5 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import { writable } from 'svelte/store';
 
-export let lang = writable("es-MX");
-export let parsedTranslations = writable([]);
+export const lang = writable('es-MX');
+export const parsedTranslations = writable([]);
