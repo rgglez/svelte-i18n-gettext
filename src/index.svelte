@@ -36,15 +36,17 @@ import Gettext from 'node-gettext';
 
 const gt = new Gettext();
 
-export let _ = derived([lang, parsedTranslations], ([$lang, $parsedTranslations]) => function(msgid, msgctxt="app") {
+export const _ = derived([lang, parsedTranslations], ([$lang, $parsedTranslations]) => function(msgid, msgctxt="app") {
     gt.addTranslations($lang, 'messages', $parsedTranslations[$lang]);
     gt.setLocale($lang);
+    console.log("LANG", $lang)
     return gt.pgettext(msgctxt, msgid);
 });
 
-export let _n = derived([lang, parsedTranslations], ([$lang, $parsedTranslations]) => function(msgid, msgidPlural="", count=0, msgctxt="app") {
+export const _n = derived([lang, parsedTranslations], ([$lang, $parsedTranslations]) => function(msgid, msgidPlural="", count=0, msgctxt="app") {
     gt.addTranslations($lang, 'messages', $parsedTranslations[$lang]);
     gt.setLocale($lang);
+    console.log("LANG", $lang)
     return gt.npgettext(msgctxt, msgid, msgidPlural, count);
 });
 </script>
