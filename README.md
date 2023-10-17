@@ -120,4 +120,4 @@ You can try this software live [here](https://codesandbox.io/s/gn6t3z).
  
  Copyright (c) 2023 Rodolfo González González.
  
- BSD-3-Clause. Read the LICENSE file.
+ BSD-3-Clause. Read the [LICENSE](https://raw.githubusercontent.com/rgglez/svelte-i18n-gettext/main/LICENSE) file.
