@@ -103,7 +103,7 @@ svelte-i18n-gettext depends on the follownig node packages:
 
 ## Live example
 
-You can try this software live [here](https://svelte.dev/repl/af093a25e8db40f5b77f9483ccf3919a?version=3.57.0) 
+You can try this software live [here](https://codesandbox.io/s/gn6t3z) 
 
 ## Notes
 
