@@ -38,15 +38,13 @@ const gt = new Gettext();
 
 export const _ = derived([lang, parsedTranslations], ([$lang, $parsedTranslations]) => function(msgid, msgctxt="app") {
     gt.addTranslations($lang, 'messages', $parsedTranslations[$lang]);
-    gt.setLocale($lang);
-    console.log("LANG", $lang)
+    gt.setLocale($lang);    
     return gt.pgettext(msgctxt, msgid);
 });
 
 export const _n = derived([lang, parsedTranslations], ([$lang, $parsedTranslations]) => function(msgid, msgidPlural="", count=0, msgctxt="app") {
     gt.addTranslations($lang, 'messages', $parsedTranslations[$lang]);
     gt.setLocale($lang);
-    console.log("LANG", $lang)
     return gt.npgettext(msgctxt, msgid, msgidPlural, count);
 });
 </script>
