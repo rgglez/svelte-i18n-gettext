@@ -109,7 +109,7 @@ You can try this software live [here](https://codesandbox.io/s/gn6t3z).
 
 * Of course, you can modify the way of getting the "current language", for instance, you could get it from the user's profile store, or from a cookie, and so on. Be careful, because sometimes the language specification comes with just 2 letters (i.e. "fr") or with other local variation (i.e. "es-AR" instead of "es-MX"). You must make the necesary adjusments in these cases.
 * To edit gettext .po files you can use [poEdit](https://poedit.net/) or [some other editor](https://alternativeto.net/software/poedit/).
-* I've included directories with sample .po and .json files, so, in case you're not familiar with gettext, you can have an idea of the format.
+* I've included directories with sample .po and .json files, so, in case you're not familiar with gettext, you can have an idea of the format. Anyway, in that case I would suggest you to read the docs.
 * Why gettext? 
   * First and most relevant reason: it uses the full strings in the original language as key, so I don't have to be searching for weird keys such as "page.title.hello" or "item.specification". If one translation doesn't exist, the original key string is used.
   * It's a GNU standard, tried and trusted.
