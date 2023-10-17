@@ -70,7 +70,7 @@ import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/store.js';
 </div>
 ```
 
-This stores have the following signatures:
+These stores have the following signatures:
 
 ```javascript
 _(msgid, msgctx)
