@@ -9,7 +9,7 @@ This is a [Svelte](https://svelte.dev/) component based on [derived stores](http
 
 ## Usage
 
-* Install package (published [here](https://www.npmjs.com/package/svelte-i18n-gettext)).
+* Install the package (published [here](https://www.npmjs.com/package/svelte-i18n-gettext)).
 
 ```bash
 npm install svelte-i18n-gettext
