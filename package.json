@@ -1,7 +1,7 @@
 {
   "name": "svelte-i18n-gettext",
   "type": "module",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "Translations (i18n) for Svelte, using gettext.",
   "main": "src/index.svelte",
   "directories": {
@@ -30,6 +30,6 @@
   "dependencies": {
     "commander": "^11.1.0",
     "gettext-parser": "^7.0.1",
-    "node-gettext": "^3.0.0"
+    "@postalsys/gettext": "^4.0.1"
   }
 }
