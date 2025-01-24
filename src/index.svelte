@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import { derived } from 'svelte/store';
 import { parsedTranslations, lang } from './stores';
-import Gettext from 'node-gettext';
+import Gettext from '@postalsys/gettext';
 
 const gt = new Gettext();
 
