@@ -31,7 +31,7 @@ import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/store.js';
   * Optionally, get the browser's language:
 
   ```javascript
-  $lang = detectBrowserLanguage();	
+  $lang = detectBrowserLanguage();
   ```
 
   Or any other method, such as loading user's preferences.
@@ -46,7 +46,7 @@ import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/store.js';
   $parsedTranslations['en-US'] = msg_en_US;
   
   import msg_es_MX from '$lib/i18n/messages-es.json';
-  $parsedTranslations['es-MX'] = msg_es_MX;	
+  $parsedTranslations['es-MX'] = msg_es_MX;
   ```
 
   (Adjust your paths according to your project's structure)
@@ -86,39 +86,21 @@ Once your program is ready, you can extract the strings with one of many tools a
 For instance, you could use [gettext-extractor](https://github.com/rgglez/gettext-extractor) using the following configuration:
 
 ```javascript
-const { GettextExtractor, RegexExtractors  } = require('@rgglez/gettext-extractor');
-const pofile = require("pofile");
-const fs = require("fs");
+const { GettextExtractor, JsExtractors, RegexExtractors } = require('@rgglez/gettext-extractor');
 
 let extractor = new GettextExtractor();
 
 extractor
     .createRegexParser([
         RegexExtractors.addCondition({
-            regex: /\$_\(['"`](.*?)['"`]\)/i,
-            text: 1
+            //regex: /\$_\((["'`])([^'"`]+?)\1\)/,
+            regex: /\$_\((["'`])((?:\\.|(?!\1).)*?)\1\)/,
+            text: 2
         })
     ])
-    .parseFilesGlob('./src/**/*.@(ts|js|tsx|jsx|svelte)');
+    .parseFilesGlob('./src/**/*.@(js|svelte)');
 
-extractor
-    .createRegexParser([
-        RegexExtractors.addCondition({
-            regex: /\$_n\(['"`](.*?)['"`]\)/i,
-            text: 1,
-            textPlural: 2
-        })
-    ])
-    .parseFilesGlob('./src/**/*.@(ts|js|tsx|jsx|svelte)');    
-
-function getPotString(headers = {}) {
-    const po = new pofile();
-    po.items = extractor.getPofileItems().sort((a, b) => (a.references.sort()[0] > b.references.sort()[0]) ? 1 : -1);
-    po.headers = Object.assign({'Content-Type': 'text/plain; charset=UTF-8'}, headers);
-    return po.toString();
-}
-
-fs.writeFileSync('./src/lib/i18n/messages.pot', getPotString());
+extractor.savePotFile('./messages.pot');
 
 extractor.printStats();
 ```
@@ -137,7 +119,7 @@ msgmerge -U your_old_translation.po latest_strings.pot
 
 ## Translation files
 
-svelte-i18n-gettext uses standard gettext .po files, which must be manually translated into JSON using the `po2json.cjs` Node.js script, which is included in the *bin/* directory. This script is has the following parameters:
+**svelte-i18n-gettext** uses standard gettext .po files, which must be manually converted into JSON using the `po2json.cjs` Node.js script, which is included in the ```bin/``` directory. This script is has the following parameters:
 
 * Use `-i, --input <input>` to specify the input PO file.
 * Use `-o, --output <output>` to specify the output JSON file.
@@ -151,9 +133,9 @@ node po2json.cjs -i example.po -o example.json -v
 
 ## Dependencies
 
-svelte-i18n-gettext depends on the follownig node packages:
+**svelte-i18n-gettext** depends on the follownig node packages:
 
-* **[node-gettext](https://www.npmjs.com/package/node-gettext)**
+* **[@postalsys/gettext](https://www.npmjs.com/package/@postalsys/gettext)**
 * **[gettext-parser](https://www.npmjs.com/package/gettext-parser)**
 * **[detect-browser-language](https://www.npmjs.com/package/detect-browser-language)** (optional)
 
@@ -169,11 +151,11 @@ You can try this software live [here](https://codesandbox.io/s/gn6t3z).
 * Why gettext? 
   * First and most relevant reason: it uses the full strings in the original language as key, so I don't have to be searching for weird keys such as "page.title.hello" or "item.specification". If one translation doesn't exist, the original key string is used.
   * It's a GNU standard, tried and trusted.
-* Remember that gettext assumes that the language of the program is English by convention.
-* Any improvement or fix is welcomed.
+* Remember that gettext assumes that the language of the program is English by convention. But you can use any languaje.
+* Improvements and fixes are welcome.
 
  ## License
  
- Copyright (c) 2023 Rodolfo González González.
+ Copyright (c) 2023-2025 Rodolfo González González.
  
  BSD-3-Clause. Read the [LICENSE](https://raw.githubusercontent.com/rgglez/svelte-i18n-gettext/main/LICENSE) file.
