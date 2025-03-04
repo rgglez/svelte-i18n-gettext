@@ -30,6 +30,39 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import { writable } from 'svelte/store';
+import { storageFactory } from "$lib/stores/storageFactory.mjs";
 
-export const lang = writable('es-MX');
-export const parsedTranslations = writable([]);
+const localStore = storageFactory(() => localStorage);
+const sessionStore = storageFactory(() => sessionStorage);
+
+const createWritableStore = (key, startValue) => {
+   const { subscribe, set } = writable(startValue);
+
+   return {
+       subscribe,
+       set,
+       useLocalStorage: () => {
+           const json = localStore.getItem(key);
+           if (json !== 'undefined') {
+               set(JSON.parse(json));
+           }
+
+           subscribe(current => {
+           localStore.setItem(key, JSON.stringify(current));
+           });
+       },
+       useSessionStorage: () => {
+           const json = sessionStore.getItem(key);
+           if (json !== 'undefined') {
+               set(JSON.parse(json));
+           }
+
+           subscribe(current => {
+               sessionStore.setItem(key, JSON.stringify(current));
+           });
+       }
+   };
+}
+
+export const lang = createWritableStore('lang', 'es-MX');
+export const parsedTranslations = createWritableStore('parsedTranslations', []);
