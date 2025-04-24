@@ -30,7 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import { writable } from 'svelte/store';
-import { storageFactory } from "$lib/stores/storageFactory.mjs";
+import { storageFactory } from "./storageFactory.mjs";
 
 const localStore = storageFactory(() => localStorage);
 const sessionStore = storageFactory(() => sessionStorage);

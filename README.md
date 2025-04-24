@@ -54,8 +54,12 @@ import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/store.js';
 * In your Svelte code, for singular form you can use the `$_` derived store:
 
 ```javascript
+<script>
+  // in order to use strings with parameters, you need to include this library:
+  import { sprintf } from 'sprintf-js';
+</script>  
 <div>
-    {@html $_(`Welcome, <b>${$user.profile.name}</b>`)}
+    {@html sprintf($_('Welcome, <b>%s</b>', $user.profile.name))}
     <br />
     {$_("Good bye.")}
 </div>
@@ -66,7 +70,7 @@ import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/store.js';
 ```javascript
 <div>
     <!-- n contains the number of deleted files -->
-    {@html $_n(`One file deleted`, `${n} files deleted`, n)}
+    {@html sprintf($_n('One file deleted', '%s files deleted', n))}
 </div>
 ```
 
@@ -142,6 +146,8 @@ node po2json.cjs -i example.po -o example.json -v
 ## Live example
 
 You can try this software live [here](https://codesandbox.io/s/gn6t3z).
+
+There is also a local example proyect in the [example/] directory.
 
 ## Notes
 
