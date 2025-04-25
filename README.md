@@ -59,7 +59,7 @@ import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/store.js';
   import { sprintf } from 'sprintf-js';
 </script>  
 <div>
-    {@html sprintf($_('Welcome, <b>%s</b>', $user.profile.name))}
+    {@html sprintf($_('Welcome, <b>%s</b>'), $user.profile.name)}
     <br />
     {$_("Good bye.")}
 </div>
