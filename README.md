@@ -140,6 +140,7 @@ node po2json.cjs -i example.po -o example.json -v
 **svelte-i18n-gettext** depends on the follownig node packages:
 
 * **[@postalsys/gettext](https://www.npmjs.com/package/@postalsys/gettext)**
+* **[sprintf-js](https://www.npmjs.com/package/sprintf-js)** (if you need to include variables in some `msgid`)
 * **[gettext-parser](https://www.npmjs.com/package/gettext-parser)**
 * **[detect-browser-language](https://www.npmjs.com/package/detect-browser-language)** (optional)
 
@@ -147,7 +148,7 @@ node po2json.cjs -i example.po -o example.json -v
 
 You can try this software live [here](https://codesandbox.io/p/sandbox/nifty-chihiro-vn854x).
 
-There is also a local example proyect in the [example](example/) directory.
+There is also a local example project in the [example](example/) directory.
 
 ## Notes
 
