@@ -3,8 +3,6 @@
     import { sprintf } from 'sprintf-js';
     import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/stores';
     import * as Icon from 'svelte-flag-icons';
-    import Gettext from 'node-gettext';
-    import { onMount } from 'svelte';
     
     import msg_de_DE from '$lib/i18n/de-DE/messages.json';
     import msg_en_US from '$lib/i18n/en-US/messages.json';
