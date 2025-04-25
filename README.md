@@ -145,9 +145,9 @@ node po2json.cjs -i example.po -o example.json -v
 
 ## Live example
 
-You can try this software live [here](https://codesandbox.io/s/gn6t3z).
+You can try this software live [here](https://codesandbox.io/p/sandbox/nifty-chihiro-vn854x).
 
-There is also a local example proyect in the [example/] directory.
+There is also a local example proyect in the [example](example/) directory.
 
 ## Notes
 
