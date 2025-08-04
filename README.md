@@ -85,6 +85,8 @@ For both derived stores there is a parameter `msgctx` which can be used to speci
 
 ## Extraction
 
+### gettext-extractor
+
 Once your program is ready, you can extract the strings with one of many tools available.
 
 For instance, you could use [gettext-extractor](https://github.com/rgglez/gettext-extractor) using the following configuration:
@@ -114,6 +116,16 @@ Just running it, for example, in the root of your project:
 ```bash
 node gettext-config.cjs
 ```
+
+### xgettext
+
+You can use [```xgettext```](https://www.gnu.org/software/gettext/manual/html_node/xgettext-Invocation.html) directly:
+
+```bash
+xgettext -f files.txt -o messages.pot -L JavaScript --from-code="utf-8" --no-wrap --keyword=$_
+```
+
+## Merging
 
 If you already have previous `po` files, you can use a command like this to merge the strings:
 
