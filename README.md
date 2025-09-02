@@ -1,8 +1,8 @@
 # svelte-i18n-gettext
 
-[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-![GitHub all releases](https://img.shields.io/github/downloads/rgglez/svelte-i18n-gettext/total) 
-![GitHub issues](https://img.shields.io/github/issues/rgglez/svelte-i18n-gettext) 
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+![GitHub all releases](https://img.shields.io/github/downloads/rgglez/svelte-i18n-gettext/total)
+![GitHub issues](https://img.shields.io/github/issues/rgglez/svelte-i18n-gettext)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/rgglez/svelte-i18n-gettext)
 
 This is a [Svelte](https://svelte.dev/) component based on [derived stores](https://learn.svelte.dev/tutorial/derived-stores) which implements [gettext](https://www.gnu.org/software/gettext/) based translation (i18n) of strings.
@@ -41,10 +41,10 @@ import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/store.js';
   ```javascript
   import msg_de_DE from '$lib/i18n/messages-de.json';
   $parsedTranslations['de-DE'] = msg_de_DE;
-  
+
   import msg_en_US from '$lib/i18n/messages-en.json';
   $parsedTranslations['en-US'] = msg_en_US;
-  
+
   import msg_es_MX from '$lib/i18n/messages-es.json';
   $parsedTranslations['es-MX'] = msg_es_MX;
   ```
@@ -57,7 +57,7 @@ import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/store.js';
 <script>
   // in order to use strings with parameters, you need to include this library:
   import { sprintf } from 'sprintf-js';
-</script>  
+</script>
 <div>
     {@html sprintf($_('Welcome, <b>%s</b>'), $user.profile.name)}
     <br />
@@ -135,17 +135,8 @@ msgmerge -U your_old_translation.po latest_strings.pot
 
 ## Translation files
 
-**svelte-i18n-gettext** uses standard gettext .po files, which must be manually converted into JSON using the `po2json.cjs` Node.js script, which is included in the ```bin/``` directory. This script is has the following parameters:
+**svelte-i18n-gettext** uses standard gettext .po files, which must be manually converted into the JSON as produced by [gettext-parser](https://github.com/smhg/gettext-parser) using the `po2json.pl` Perl script, which can be found [here](https://www.github.com/rgglez/gettext-po2json). Any other tool which produces the same format should be useful.
 
-* Use `-i, --input <input>` to specify the input PO file.
-* Use `-o, --output <output>` to specify the output JSON file.
-* Use `-v, --verbose` to show verbose execution messages.
-
-Example usage:
-
-```bash
-node po2json.cjs -i example.po -o example.json -v
-```
 
 ## Dependencies
 
@@ -167,14 +158,14 @@ There is also a local example project in the [example](example/) directory.
 * Of course, you can modify the way of getting the "current language", for instance, you could get it from the user's profile store, or from a cookie, and so on. Be careful, because sometimes the language specification comes with just 2 letters (i.e. "fr") or with other local variation (i.e. "es-AR" instead of "es-MX"). You must make the necesary adjusments in these cases.
 * To edit gettext .po files you can use [poEdit](https://poedit.net/) or [some other editor](https://alternativeto.net/software/poedit/).
 * I've included directories with sample .po and .json files, so, in case you're not familiar with gettext, you can have an idea of the format. Anyway, in that case I would suggest you to read the docs.
-* Why gettext? 
+* Why gettext?
   * First and most relevant reason: it uses the full strings in the original language as key, so I don't have to be searching for weird keys such as "page.title.hello" or "item.specification". If one translation doesn't exist, the original key string is used.
   * It's a GNU standard, tried and trusted.
 * Remember that gettext assumes that the language of the program is English by convention. But you can use any languaje.
 * Improvements and fixes are welcome.
 
  ## License
- 
- Copyright (c) 2023-2025 Rodolfo González González.
- 
- BSD-3-Clause. Read the [LICENSE](https://raw.githubusercontent.com/rgglez/svelte-i18n-gettext/main/LICENSE) file.
+
+Copyright (c) 2023-2025 Rodolfo González González.
+
+Licensed under [BSD-3-Clause](https://opensource.org/license/bsd-3-clause) license. Read the [LICENSE](https://raw.githubusercontent.com/rgglez/svelte-i18n-gettext/main/LICENSE) file.
