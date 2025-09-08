@@ -4,6 +4,8 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/rgglez/svelte-i18n-gettext/total)
 ![GitHub issues](https://img.shields.io/github/issues/rgglez/svelte-i18n-gettext)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/rgglez/svelte-i18n-gettext)
+![GitHub stars](https://img.shields.io/github/stars/rgglez/svelte-i18n-gettext?style=social)
+![GitHub forks](https://img.shields.io/github/forks/rgglez/svelte-i18n-gettext?style=social)
 
 This is a [Svelte](https://svelte.dev/) component based on [derived stores](https://learn.svelte.dev/tutorial/derived-stores) which implements [gettext](https://www.gnu.org/software/gettext/) based translation (i18n) of strings.
 
