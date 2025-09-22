@@ -31,20 +31,63 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import { derived } from 'svelte/store';
-import { parsedTranslations, lang } from './stores';
+import { translationStore } from './stores';
 import Gettext from '@postalsys/gettext';
 
+// Create a single Gettext instance to reuse
 const gt = new Gettext();
 
-export const _ = derived([lang, parsedTranslations], ([$lang, $parsedTranslations]) => function(msgid, msgctxt="app") {
-    gt.addTranslations($lang, 'messages', $parsedTranslations[$lang]);
-    gt.setLocale($lang);
-    return gt.pgettext(msgctxt, msgid);
-});
+// Helper function to setup Gettext instance for each call
+const setupGettext = (lang, parsedTranslations) => {
+  const currentTranslations = parsedTranslations[lang];
+  if (currentTranslations && currentTranslations.translations) {
+    // Always add translations before each call
+    gt.addTranslations(lang, 'messages', currentTranslations);
+  }
+  gt.setLocale(lang);
+};
 
-export const _n = derived([lang, parsedTranslations], ([$lang, $parsedTranslations]) => function(msgid, msgidPlural="", count=0, msgctxt="app") {
-    gt.addTranslations($lang, 'messages', $parsedTranslations[$lang]);
-    gt.setLocale($lang);
-    return gt.npgettext(msgctxt, msgid, msgidPlural, count);
-});
+// Single derived store for translation functions
+export const translations = derived(
+  translationStore,
+  ($translation) => {
+    const { lang, parsedTranslations } = $translation;
+
+    // Setup Gettext with current language and translations
+    setupGettext(lang, parsedTranslations);
+
+    return {
+      // Simple translation function
+      _: (msgid, msgctxt = "app") => {
+        return gt.pgettext(msgctxt, msgid);
+      },
+
+      // Plural translation function
+      _n: (msgid, msgidPlural = "", count = 0, msgctxt = "app") => {
+        return gt.npgettext(msgctxt, msgid, msgidPlural, count);
+      },
+
+      // Additional utility functions
+      getCurrentLang: () => lang,
+      hasTranslations: () => !!(parsedTranslations[lang]),
+
+      // Function to get raw translation without context
+      getRaw: (msgid, msgctxt = "app") => {
+        const translations = parsedTranslations[lang];
+        return translations?.translations?.[msgctxt]?.[msgid]?.msgstr?.[0] || msgid;
+      },
+
+      // Debug function to inspect current translations
+      debug: () => {
+        console.log('Current language:', lang);
+        console.log('Available translations:', parsedTranslations[lang]);
+        console.log('Gettext domain info:', gt.domains);
+      }
+    };
+  }
+);
+
+// Export individual functions for backward compatibility
+export const _ = derived(translations, ($translations) => $translations._);
+export const _n = derived(translations, ($translations) => $translations._n);
 </script>

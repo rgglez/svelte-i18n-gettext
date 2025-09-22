@@ -29,40 +29,91 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import { writable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
 import { storageFactory } from "./storageFactory.mjs";
 
 const localStore = storageFactory(() => localStorage);
 const sessionStore = storageFactory(() => sessionStorage);
 
 const createWritableStore = (key, startValue) => {
-   const { subscribe, set } = writable(startValue);
-
-   return {
-       subscribe,
-       set,
-       useLocalStorage: () => {
-           const json = localStore.getItem(key);
-           if (json !== 'undefined') {
-               set(JSON.parse(json));
-           }
-
-           subscribe(current => {
-           localStore.setItem(key, JSON.stringify(current));
-           });
-       },
-       useSessionStorage: () => {
-           const json = sessionStore.getItem(key);
-           if (json !== 'undefined') {
-               set(JSON.parse(json));
-           }
-
-           subscribe(current => {
-               sessionStore.setItem(key, JSON.stringify(current));
-           });
-       }
-   };
+  const { subscribe, set, update } = writable(startValue);
+  return {
+    subscribe,
+    set,
+    update,
+    useLocalStorage: () => {
+      const json = localStore.getItem(key);
+      if (json !== 'undefined') {
+        set(JSON.parse(json));
+      }
+      subscribe(current => {
+        localStore.setItem(key, JSON.stringify(current));
+      });
+    },
+    useSessionStorage: () => {
+      const json = sessionStore.getItem(key);
+      if (json !== 'undefined') {
+        set(JSON.parse(json));
+      }
+      subscribe(current => {
+        sessionStore.setItem(key, JSON.stringify(current));
+      });
+    }
+  };
 }
 
-export const lang = createWritableStore('lang', 'es-MX');
-export const parsedTranslations = createWritableStore('parsedTranslations', []);
+// Combined store with both properties
+export const translationStore = createWritableStore('translation', {
+  lang: 'es-MX',
+  parsedTranslations: []
+});
+
+// Derived stores for easy access to individual properties
+export const lang = derived(
+  translationStore,
+  $translation => $translation.lang
+);
+
+export const parsedTranslations = derived(
+  translationStore,
+  $translation => $translation.parsedTranslations
+);
+
+// Helper functions to update individual properties
+export const setLang = (newLang) => {
+  translationStore.update(current => ({
+    ...current,
+    lang: newLang
+  }));
+};
+
+export const setParsedTranslations = (newTranslations) => {
+  translationStore.update(current => ({
+    ...current,
+    parsedTranslations: newTranslations
+  }));
+};
+
+// Helper function to add translations for a specific language
+export const addTranslationForLanguage = (lang, translations) => {
+  translationStore.update(current => ({
+    ...current,
+    parsedTranslations: {
+      ...current.parsedTranslations,
+      [lang]: translations
+    }
+  }));
+};
+
+// Helper function to set multiple translations at once
+export const setAllTranslations = (translationsObject) => {
+  translationStore.update(current => ({
+    ...current,
+    parsedTranslations: translationsObject
+  }));
+};
+
+// Helper function to update both language and translations at once
+export const setTranslation = (lang, parsedTranslations) => {
+  translationStore.set({ lang, parsedTranslations });
+};

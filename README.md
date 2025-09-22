@@ -9,6 +9,8 @@
 
 This is a [Svelte](https://svelte.dev/) component based on [derived stores](https://learn.svelte.dev/tutorial/derived-stores) which implements [gettext](https://www.gnu.org/software/gettext/) based translation (i18n) of strings.
 
+Version 2 is an improvement to make the code more encapsulated and modular.
+
 ## Usage
 
 * Install the package (published [here](https://www.npmjs.com/package/svelte-i18n-gettext)).
@@ -17,20 +19,51 @@ This is a [Svelte](https://svelte.dev/) component based on [derived stores](http
 npm install svelte-i18n-gettext
 ```
 
+### Version 2.x
+
 * Include the stores:
 
-```javascript
-import { _, _n } from 'svelte-i18n-gettext/src/index.svelte';
-import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/store.js';
-```
+  ```javascript
+  import { _ } from 'svelte-i18n-gettext';
+  import { setLang, addTranslationForLanguage } from 'svelte-i18n-gettext/src/stores';
+  ```
 
-  * Use the `lang` (or a local alias) store to specify the language to use:
+* Use `setLang` to set the language:
+
+  ```javascript
+  setLang('es-MX')
+  ```
+
+* Include the translation files (see the examples directory for samples) and assign them to the store:
+
+  ```javascript
+  import msg_de_DE from '$lib/i18n/de-DE/messages.json';
+  import msg_en_US from '$lib/i18n/en-US/messages.json';
+  import msg_es_MX from '$lib/i18n/es-MX/messages.json';
+  import msg_fr_FR from '$lib/i18n/fr-FR/messages.json';
+
+  addTranslationForLanguage('fr-FR', msg_fr_FR);
+  addTranslationForLanguage('de-DE', msg_de_DE);
+  addTranslationForLanguage('es-MX', msg_es_MX);
+  addTranslationForLanguage('en-US', msg_en_US);
+  ```
+
+### Version 1.x
+
+* You still can use the **version 1.x** way, even if it is deprecated:
+
+  ```javascript
+  import { _, _n } from 'svelte-i18n-gettext/src/index.svelte';
+  import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/store.js';
+  ```
+
+* Use the `lang` (or a local alias) store to specify the language to use:
 
   ```javascript
   $lang = 'es-MX';
   ```
 
-  * Optionally, get the browser's language:
+* Optionally, get the browser's language:
 
   ```javascript
   $lang = detectBrowserLanguage();
@@ -53,28 +86,30 @@ import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/store.js';
 
   (Adjust your paths according to your project's structure)
 
+### General usage (v2 or v1)
+
 * In your Svelte code, for singular form you can use the `$_` derived store:
 
-```javascript
-<script>
-  // in order to use strings with parameters, you need to include this library:
-  import { sprintf } from 'sprintf-js';
-</script>
-<div>
-    {@html sprintf($_('Welcome, <b>%s</b>'), $user.profile.name)}
-    <br />
-    {$_("Good bye.")}
-</div>
-```
+  ```javascript
+  <script>
+    // in order to use strings with parameters, you need to include this library:
+    import { sprintf } from 'sprintf-js';
+  </script>
+  <div>
+      {@html sprintf($_('Welcome, <b>%s</b>'), $user.profile.name)}
+      <br />
+      {$_("Good bye.")}
+  </div>
+  ```
 
 * In your Svelte code, for plural forms you can use the `$_n` derived store:
 
-```javascript
-<div>
-    <!-- n contains the number of deleted files -->
-    {@html sprintf($_n('One file deleted', '%s files deleted', n))}
-</div>
-```
+  ```javascript
+  <div>
+      <!-- n contains the number of deleted files -->
+      {@html sprintf($_n('One file deleted', '%s files deleted', n))}
+  </div>
+  ```
 
 These stores have the following signatures:
 
@@ -87,36 +122,6 @@ For both derived stores there is a parameter `msgctx` which can be used to speci
 
 ## Extraction
 
-### gettext-extractor
-
-Once your program is ready, you can extract the strings with one of many tools available.
-
-For instance, you could use [gettext-extractor](https://github.com/rgglez/gettext-extractor) using the following configuration:
-
-```javascript
-const { GettextExtractor, JsExtractors, RegexExtractors } = require('@rgglez/gettext-extractor');
-
-let extractor = new GettextExtractor();
-
-extractor
-    .createRegexParser([
-        RegexExtractors.addCondition({
-            //regex: /\$_\((["'`])([^'"`]+?)\1\)/,
-            regex: /\$_\((["'`])((?:\\.|(?!\1).)*?)\1\)/,
-            text: 2
-        })
-    ])
-    .parseFilesGlob('./src/**/*.@(js|svelte)');
-
-extractor.savePotFile('./messages.pot');
-
-extractor.printStats();
-```
-
-Just running it, for example, in the root of your project:
-
-```bash
-node gettext-config.cjs
 ```
 
 ### xgettext
