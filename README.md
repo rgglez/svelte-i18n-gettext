@@ -173,6 +173,6 @@ There is also a local example project in the [example](example/) directory.
 
  ## License
 
-Copyright (c) 2023-2025 Rodolfo González González.
+Copyright (c) 2026-2026 Rodolfo González González.
 
 Licensed under [BSD-3-Clause](https://opensource.org/license/bsd-3-clause) license. Read the [LICENSE](https://raw.githubusercontent.com/rgglez/svelte-i18n-gettext/main/LICENSE) file.
