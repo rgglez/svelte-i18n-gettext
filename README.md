@@ -122,8 +122,6 @@ For both derived stores there is a parameter `msgctx` which can be used to speci
 
 ## Extraction
 
-```
-
 ### xgettext
 
 You can use [```xgettext```](https://www.gnu.org/software/gettext/manual/html_node/xgettext-Invocation.html) directly:
