@@ -30,6 +30,6 @@
   "dependencies": {
     "commander": "^11.1.0",
     "gettext-parser": "^7.0.1",
-    "@postalsys/gettext": "^4.0.1"
+    "@postalsys/gettext": "^4.1.1"
   }
 }
