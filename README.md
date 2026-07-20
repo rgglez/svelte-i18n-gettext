@@ -1,6 +1,6 @@
 # svelte-i18n-gettext
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![GitHub all releases](https://img.shields.io/github/downloads/rgglez/svelte-i18n-gettext/total)
 ![GitHub issues](https://img.shields.io/github/issues/rgglez/svelte-i18n-gettext)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/rgglez/svelte-i18n-gettext)
@@ -173,4 +173,4 @@ There is also a local example project in the [example](example/) directory.
 
 Copyright (c) 2026-2026 Rodolfo González González.
 
-Licensed under [BSD-3-Clause](https://opensource.org/license/bsd-3-clause) license. Read the [LICENSE](https://raw.githubusercontent.com/rgglez/svelte-i18n-gettext/main/LICENSE) file.
+Licensed under [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) license. Read the [LICENSE](https://raw.githubusercontent.com/rgglez/svelte-i18n-gettext/main/LICENSE) file.

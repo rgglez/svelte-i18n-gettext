@@ -22,7 +22,7 @@
     "gettext"
   ],
   "author": "Rodolfo González González",
-  "license": "BSD-3-Clause",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/rgglez/svelte-i18n-gettext/issues"
   },
