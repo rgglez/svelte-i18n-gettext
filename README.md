@@ -13,19 +13,47 @@ Version 2 is an improvement to make the code more encapsulated and modular.
 
 ## Usage
 
-* Install the package (published [here](https://www.npmjs.com/package/svelte-i18n-gettext)).
+* Install the package (published [here](https://www.npmjs.com/package/@rgglez/svelte-i18n-gettext)).
 
 ```bash
-npm install svelte-i18n-gettext
+npm install @rgglez/svelte-i18n-gettext
 ```
+
+* Since version 3 the package is published as `@rgglez/svelte-i18n-gettext`.
+  Versions 1.x and 2.x remain available as
+  [`svelte-i18n-gettext`](https://www.npmjs.com/package/svelte-i18n-gettext).
+  To migrate, replace `svelte-i18n-gettext` with `@rgglez/svelte-i18n-gettext`
+  in `package.json` and in **every** import of the project at once: the file
+  layout is unchanged, so deep imports such as `/src/index.svelte` and
+  `/src/stores` keep working. Mixing both names in one project creates two
+  separate stores, and `setLang()` on one does not affect the other.
+
+### Version 3.x
+
+Version 3 keeps the 2.x API unchanged: the same stores, helpers, and
+`_(msgid, msgctxt)` / `_n(msgid, msgidPlural, count, msgctxt)` signatures.
+Translation now goes through the framework-agnostic core
+[@rgglez/i18n-gettext](https://github.com/rgglez/i18n-gettext), shared with
+[react-i18n-gettext](https://github.com/rgglez/react-i18n-gettext) and
+[astro-i18n-gettext](https://github.com/rgglez/astro-i18n-gettext), so the
+same `.json` catalogs work in all of them.
+
+* If no catalog matches the exact language, `_` and `_n` now fall back to a
+  catalog with the same primary language (`es` ↔ `es-MX`) before returning
+  the msgid.
+* `sprintf` can be imported from the core instead of installing `sprintf-js`:
+
+  ```javascript
+  import { sprintf } from '@rgglez/i18n-gettext';
+  ```
 
 ### Version 2.x
 
 * Include the stores:
 
   ```javascript
-  import { _ } from 'svelte-i18n-gettext';
-  import { setLang, addTranslationForLanguage } from 'svelte-i18n-gettext/src/stores';
+  import { _ } from '@rgglez/svelte-i18n-gettext';
+  import { setLang, addTranslationForLanguage } from '@rgglez/svelte-i18n-gettext/src/stores';
   ```
 
 * Use `setLang` to set the language:
@@ -53,8 +81,8 @@ npm install svelte-i18n-gettext
 * You still can use the **version 1.x** way, even if it is deprecated:
 
   ```javascript
-  import { _, _n } from 'svelte-i18n-gettext/src/index.svelte';
-  import { parsedTranslations, lang } from 'svelte-i18n-gettext/src/store.js';
+  import { _, _n } from '@rgglez/svelte-i18n-gettext/src/index.svelte';
+  import { parsedTranslations, lang } from '@rgglez/svelte-i18n-gettext/src/stores';
   ```
 
 * Use the `lang` (or a local alias) store to specify the language to use:
@@ -147,7 +175,7 @@ msgmerge -U your_old_translation.po latest_strings.pot
 
 **svelte-i18n-gettext** depends on the follownig node packages:
 
-* **[@postalsys/gettext](https://www.npmjs.com/package/@postalsys/gettext)**
+* **[@rgglez/i18n-gettext](https://www.npmjs.com/package/@rgglez/i18n-gettext)** (v3+; v2 used [@postalsys/gettext](https://www.npmjs.com/package/@postalsys/gettext) directly)
 * **[sprintf-js](https://www.npmjs.com/package/sprintf-js)** (if you need to include variables in some `msgid`)
 * **[gettext-parser](https://www.npmjs.com/package/gettext-parser)**
 * **[detect-browser-language](https://www.npmjs.com/package/detect-browser-language)** (optional)

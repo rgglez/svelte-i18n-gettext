@@ -1,7 +1,7 @@
 <script>
-    import { _ } from 'svelte-i18n-gettext';
+    import { _ } from '@rgglez/svelte-i18n-gettext';
     import { sprintf } from 'sprintf-js';
-    import { setLang, addTranslationForLanguage } from 'svelte-i18n-gettext/src/stores';
+    import { setLang, addTranslationForLanguage } from '@rgglez/svelte-i18n-gettext/src/stores';
     import * as Icon from 'svelte-flag-icons';
 
     import msg_de_DE from '$lib/i18n/de-DE/messages.json';

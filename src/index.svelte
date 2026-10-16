@@ -32,20 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import { derived } from 'svelte/store';
 import { translationStore } from './stores';
-import Gettext from '@postalsys/gettext';
-
-// Create a single Gettext instance to reuse
-const gt = new Gettext();
-
-// Helper function to setup Gettext instance for each call
-const setupGettext = (lang, parsedTranslations) => {
-  const currentTranslations = parsedTranslations[lang];
-  if (currentTranslations && currentTranslations.translations) {
-    // Always add translations before each call
-    gt.addTranslations(lang, 'messages', currentTranslations);
-  }
-  gt.setLocale(lang);
-};
+import { createTranslator } from '@rgglez/i18n-gettext';
 
 // Single derived store for translation functions
 export const translations = derived(
@@ -53,18 +40,18 @@ export const translations = derived(
   ($translation) => {
     const { lang, parsedTranslations } = $translation;
 
-    // Setup Gettext with current language and translations
-    setupGettext(lang, parsedTranslations);
+    // The core owns the gettext backend; this store only tracks the language
+    const translator = createTranslator(lang, parsedTranslations);
 
     return {
       // Simple translation function
       _: (msgid, msgctxt = "app") => {
-        return gt.pgettext(msgctxt, msgid);
+        return translator._(msgid, msgctxt);
       },
 
       // Plural translation function
       _n: (msgid, msgidPlural = "", count = 0, msgctxt = "app") => {
-        return gt.npgettext(msgctxt, msgid, msgidPlural, count);
+        return translator._n(msgid, msgidPlural, count, msgctxt);
       },
 
       // Additional utility functions
@@ -81,7 +68,7 @@ export const translations = derived(
       debug: () => {
         console.log('Current language:', lang);
         console.log('Available translations:', parsedTranslations[lang]);
-        console.log('Gettext domain info:', gt.domains);
+        console.log('Translator:', translator);
       }
     };
   }

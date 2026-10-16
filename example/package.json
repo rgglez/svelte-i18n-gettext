@@ -30,6 +30,6 @@
 		"node-gettext": "^3.0.0",
 		"sprintf-js": "^1.1.3",
 		"svelte-flag-icons": "^2.0.1",
-		"svelte-i18n-gettext": "file:.."
+		"@rgglez/svelte-i18n-gettext": "file:.."
 	}
 }
