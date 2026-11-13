@@ -1,6 +1,6 @@
 <script>
     import { _ } from '@rgglez/svelte-i18n-gettext';
-    import { sprintf } from 'sprintf-js';
+    import { sprintf } from '@rgglez/i18n-gettext';
     import { setLang, addTranslationForLanguage } from '@rgglez/svelte-i18n-gettext/src/stores';
     import * as Icon from 'svelte-flag-icons';
 

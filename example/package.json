@@ -27,8 +27,7 @@
 		"vite": "^6.2.5"
 	},
 	"dependencies": {
-		"node-gettext": "^3.0.0",
-		"sprintf-js": "^1.1.3",
+		"@rgglez/i18n-gettext": "^0.1.0",
 		"svelte-flag-icons": "^2.0.1",
 		"@rgglez/svelte-i18n-gettext": "file:.."
 	}

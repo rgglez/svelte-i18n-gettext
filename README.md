@@ -1,204 +1,114 @@
 # svelte-i18n-gettext
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-![GitHub all releases](https://img.shields.io/github/downloads/rgglez/svelte-i18n-gettext/total)
-![GitHub issues](https://img.shields.io/github/issues/rgglez/svelte-i18n-gettext)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/y/rgglez/svelte-i18n-gettext)
-![GitHub stars](https://img.shields.io/github/stars/rgglez/svelte-i18n-gettext?style=social)
-![GitHub forks](https://img.shields.io/github/forks/rgglez/svelte-i18n-gettext?style=social)
 
-This is a [Svelte](https://svelte.dev/) component based on [derived stores](https://learn.svelte.dev/tutorial/derived-stores) which implements [gettext](https://www.gnu.org/software/gettext/) based translation (i18n) of strings.
+[gettext](https://www.gnu.org/software/gettext/) translations for
+[Svelte](https://svelte.dev/) with reactive stores and live language switching.
+Version 3 uses [@rgglez/i18n-gettext](https://github.com/rgglez/i18n-gettext)
+as its translation core, shared with
+[react-i18n-gettext](https://github.com/rgglez/react-i18n-gettext) and
+[astro-i18n-gettext](https://github.com/rgglez/astro-i18n-gettext). The same
+gettext-parser JSON catalogs work in all three packages.
 
-Version 2 is an improvement to make the code more encapsulated and modular.
-
-## Usage
-
-* Install the package (published [here](https://www.npmjs.com/package/@rgglez/svelte-i18n-gettext)).
+## Install
 
 ```bash
 npm install @rgglez/svelte-i18n-gettext
 ```
 
-* Since version 3 the package is published as `@rgglez/svelte-i18n-gettext`.
-  Versions 1.x and 2.x remain available as
-  [`svelte-i18n-gettext`](https://www.npmjs.com/package/svelte-i18n-gettext).
-  To migrate, replace `svelte-i18n-gettext` with `@rgglez/svelte-i18n-gettext`
-  in `package.json` and in **every** import of the project at once: the file
-  layout is unchanged, so deep imports such as `/src/index.svelte` and
-  `/src/stores` keep working. Mixing both names in one project creates two
-  separate stores, and `setLang()` on one does not affect the other.
+Install the core explicitly if you use its `sprintf` helper:
 
-### Version 3.x
+```bash
+npm install @rgglez/i18n-gettext
+```
 
-Version 3 keeps the 2.x API unchanged: the same stores, helpers, and
-`_(msgid, msgctxt)` / `_n(msgid, msgidPlural, count, msgctxt)` signatures.
-Translation now goes through the framework-agnostic core
-[@rgglez/i18n-gettext](https://github.com/rgglez/i18n-gettext), shared with
-[react-i18n-gettext](https://github.com/rgglez/react-i18n-gettext) and
-[astro-i18n-gettext](https://github.com/rgglez/astro-i18n-gettext), so the
-same `.json` catalogs work in all of them.
+## Usage
 
-* If no catalog matches the exact language, `_` and `_n` now fall back to a
-  catalog with the same primary language (`es` ↔ `es-MX`) before returning
-  the msgid.
-* `sprintf` can be imported from the core instead of installing `sprintf-js`:
+Import the translation stores and register your catalogs. The store starts in
+`es-MX`; call `setLang` to choose another language.
 
-  ```javascript
+```svelte
+<script>
+  import { _, _n } from '@rgglez/svelte-i18n-gettext';
+  import { addTranslationForLanguage, setLang } from '@rgglez/svelte-i18n-gettext/src/stores';
   import { sprintf } from '@rgglez/i18n-gettext';
-  ```
+  import de from './i18n/de-DE/messages.json';
+  import es from './i18n/es-MX/messages.json';
 
-### Version 2.x
+  addTranslationForLanguage('de-DE', de);
+  addTranslationForLanguage('es-MX', es);
 
-* Include the stores:
+  let name = 'Roger Rabbit';
+  let count = 2;
+</script>
 
-  ```javascript
-  import { _ } from '@rgglez/svelte-i18n-gettext';
-  import { setLang, addTranslationForLanguage } from '@rgglez/svelte-i18n-gettext/src/stores';
-  ```
-
-* Use `setLang` to set the language:
-
-  ```javascript
-  setLang('es-MX')
-  ```
-
-* Include the translation files (see the examples directory for samples) and assign them to the store:
-
-  ```javascript
-  import msg_de_DE from '$lib/i18n/de-DE/messages.json';
-  import msg_en_US from '$lib/i18n/en-US/messages.json';
-  import msg_es_MX from '$lib/i18n/es-MX/messages.json';
-  import msg_fr_FR from '$lib/i18n/fr-FR/messages.json';
-
-  addTranslationForLanguage('fr-FR', msg_fr_FR);
-  addTranslationForLanguage('de-DE', msg_de_DE);
-  addTranslationForLanguage('es-MX', msg_es_MX);
-  addTranslationForLanguage('en-US', msg_en_US);
-  ```
-
-### Version 1.x
-
-* You still can use the **version 1.x** way, even if it is deprecated:
-
-  ```javascript
-  import { _, _n } from '@rgglez/svelte-i18n-gettext/src/index.svelte';
-  import { parsedTranslations, lang } from '@rgglez/svelte-i18n-gettext/src/stores';
-  ```
-
-* Use the `lang` (or a local alias) store to specify the language to use:
-
-  ```javascript
-  $lang = 'es-MX';
-  ```
-
-* Optionally, get the browser's language:
-
-  ```javascript
-  $lang = detectBrowserLanguage();
-  ```
-
-  Or any other method, such as loading user's preferences.
-
-* Include the translation files (see the examples directory for samples) and assign them to the store:
-
-  ```javascript
-  import msg_de_DE from '$lib/i18n/messages-de.json';
-  $parsedTranslations['de-DE'] = msg_de_DE;
-
-  import msg_en_US from '$lib/i18n/messages-en.json';
-  $parsedTranslations['en-US'] = msg_en_US;
-
-  import msg_es_MX from '$lib/i18n/messages-es.json';
-  $parsedTranslations['es-MX'] = msg_es_MX;
-  ```
-
-  (Adjust your paths according to your project's structure)
-
-### General usage (v2 or v1)
-
-* In your Svelte code, for singular form you can use the `$_` derived store:
-
-  ```javascript
-  <script>
-    // in order to use strings with parameters, you need to include this library:
-    import { sprintf } from 'sprintf-js';
-  </script>
-  <div>
-      {@html sprintf($_('Welcome, <b>%s</b>'), $user.profile.name)}
-      <br />
-      {$_("Good bye.")}
-  </div>
-  ```
-
-* In your Svelte code, for plural forms you can use the `$_n` derived store:
-
-  ```javascript
-  <div>
-      <!-- n contains the number of deleted files -->
-      {@html sprintf($_n('One file deleted', '%s files deleted', n))}
-  </div>
-  ```
-
-These stores have the following signatures:
-
-```javascript
-_(msgid, msgctx)
-_n(msgid, msgidPlurals, count, msgctx)
+<p>{$_('Welcome')}</p>
+<p>{sprintf($_('Hello %s'), name)}</p>
+<p>{sprintf($_n('One file deleted', '%d files deleted', count), count)}</p>
+<button onclick={() => setLang('de-DE')}>Deutsch</button>
+<button onclick={() => setLang('es-MX')}>Español</button>
 ```
 
-For both derived stores there is a parameter `msgctx` which can be used to specify the [context](https://www.gnu.org/software/gettext/manual/html_node/Contexts.html) of the translation.
+`_` and `_n` are Svelte stores whose values are translation functions, so use
+`$_(...)` and `$_n(...)` in components. Calling `setLang` updates their
+subscribers. You can also use `setAllTranslations({ 'de-DE': de, 'es-MX': es })`
+to register all catalogs at once.
 
-## Extraction
+## API
 
-### xgettext
+| Export | Description |
+| :----- | :---------- |
+| `_`, `_n` | Derived stores containing the translation functions |
+| `translations` | Derived store with `_, _n, getCurrentLang, hasTranslations, getRaw, debug` |
+| `translationStore` | Writable store containing `lang` and `parsedTranslations` |
+| `lang`, `parsedTranslations` | Derived stores for the current language and catalogs |
+| `setLang(lang)` | Change the current language |
+| `addTranslationForLanguage(lang, catalog)` | Add or replace one catalog |
+| `setAllTranslations(catalogs)`, `setParsedTranslations(catalogs)` | Replace all catalogs |
+| `setTranslation(lang, catalogs)` | Set the language and catalogs together |
 
-You can use [```xgettext```](https://www.gnu.org/software/gettext/manual/html_node/xgettext-Invocation.html) directly:
+The translation stores are exported from the package root; the language and
+catalog stores and helpers are exported from `@rgglez/svelte-i18n-gettext/src/stores`.
+The translation functions have these signatures:
+
+```js
+_(msgid, msgctxt = 'app')
+_n(msgid, msgidPlural = '', count = 0, msgctxt = 'app')
+```
+
+Catalog lookup tries the exact locale first, then a catalog with the same
+primary language (`es` ↔ `es-MX`). Missing entries return the original msgid
+or plural msgid. `sprintf` and `vsprintf` are exported by the core for
+substituting values after translation.
+
+## Catalogs
+
+Write translations in gettext `.po` files and convert them to the
+gettext-parser JSON format with
+[gettext-po2json](https://github.com/rgglez/gettext-po2json). Use the `app`
+context for strings without an explicit context:
 
 ```bash
-xgettext -f files.txt -o messages.pot -L JavaScript --from-code="utf-8" --no-wrap --keyword=$_
+perl po2json.pl --po es-MX.po --json es-MX/messages.json --context app
 ```
 
-## Merging
+The [example](example/) includes `.po` and JSON catalogs and a SvelteKit app.
 
-If you already have previous `po` files, you can use a command like this to merge the strings:
+## Live demo
 
-```bash
-msgmerge -U your_old_translation.po latest_strings.pot
-```
+Visit [https://codesandbox.io/p/devbox/784rhr](https://codesandbox.io/p/devbox/784rhr)
 
-## Translation files
+## Migrating from 1.x or 2.x
 
-**svelte-i18n-gettext** uses standard gettext .po files, which must be manually converted into the JSON as produced by [gettext-parser](https://github.com/smhg/gettext-parser) using the `po2json.pl` Perl script, which can be found [here](https://www.github.com/rgglez/gettext-po2json). Any other tool which produces the same format should be useful.
+Version 3 is published as `@rgglez/svelte-i18n-gettext`; versions 1.x and 2.x
+were published as `svelte-i18n-gettext`. Replace the package name in
+`package.json` and **every** import. The store helpers and translation
+function signatures remain available, including deep imports under `src/`.
+Do not mix the old and new package names: each copy has its own language store.
 
+## License
 
-## Dependencies
+Copyright (c) 2026 Rodolfo González González.
 
-**svelte-i18n-gettext** depends on the follownig node packages:
-
-* **[@rgglez/i18n-gettext](https://www.npmjs.com/package/@rgglez/i18n-gettext)** (v3+; v2 used [@postalsys/gettext](https://www.npmjs.com/package/@postalsys/gettext) directly)
-* **[sprintf-js](https://www.npmjs.com/package/sprintf-js)** (if you need to include variables in some `msgid`)
-* **[gettext-parser](https://www.npmjs.com/package/gettext-parser)**
-* **[detect-browser-language](https://www.npmjs.com/package/detect-browser-language)** (optional)
-
-## Live example
-
-You can try this software live [here](https://codesandbox.io/p/sandbox/nifty-chihiro-vn854x).
-
-There is also a local example project in the [example](example/) directory.
-
-## Notes
-
-* Of course, you can modify the way of getting the "current language", for instance, you could get it from the user's profile store, or from a cookie, and so on. Be careful, because sometimes the language specification comes with just 2 letters (i.e. "fr") or with other local variation (i.e. "es-AR" instead of "es-MX"). You must make the necesary adjusments in these cases.
-* To edit gettext .po files you can use [poEdit](https://poedit.net/) or [some other editor](https://alternativeto.net/software/poedit/).
-* I've included directories with sample .po and .json files, so, in case you're not familiar with gettext, you can have an idea of the format. Anyway, in that case I would suggest you to read the docs.
-* Why gettext?
-  * First and most relevant reason: it uses the full strings in the original language as key, so I don't have to be searching for weird keys such as "page.title.hello" or "item.specification". If one translation doesn't exist, the original key string is used.
-  * It's a GNU standard, tried and trusted.
-* Remember that gettext assumes that the language of the program is English by convention. But you can use any languaje.
-* Improvements and fixes are welcome.
-
- ## License
-
-Copyright (c) 2026-2026 Rodolfo González González.
-
-Licensed under [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) license. Read the [LICENSE](https://raw.githubusercontent.com/rgglez/svelte-i18n-gettext/main/LICENSE) file.
+Licensed under the [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0)
+license. Read the [LICENSE](LICENSE) file.
