@@ -18,16 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      # The example depends on file:.. ; its sources import the library's deps.
+      # Frozen lockfiles: npm would ignore bun.lock and pull @postalsys/gettext
+      # >=4.3, which imports node:util and breaks the browser build.
       - name: Install library deps
-        run: bun install
-      # npm symlinks file:.. deps; bun copies the whole repo (example/ included).
+        run: bun install --frozen-lockfile
       - name: Build example
         working-directory: example
-        run: npm install && npm run build
+        run: bun install --frozen-lockfile && bun run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: example/build
