@@ -1,0 +1,46 @@
+name: Deploy example to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # The example depends on file:.. ; its sources import the library's deps.
+      - name: Install library deps
+        run: bun install
+      # npm symlinks file:.. deps; bun copies the whole repo (example/ included).
+      - name: Build example
+        working-directory: example
+        run: npm install && npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: example/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

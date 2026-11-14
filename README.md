@@ -96,7 +96,9 @@ The [example](example/) includes `.po` and JSON catalogs and a SvelteKit app.
 
 ## Live demo
 
-Visit [https://codesandbox.io/p/devbox/784rhr](https://codesandbox.io/p/devbox/784rhr)
+The component can be viewed live [here](https://rgglez.github.io/svelte-i18n-gettext/).
+
+You can run it locally from the `example` directory.
 
 ## Migrating from 1.x or 2.x
 
