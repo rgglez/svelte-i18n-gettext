@@ -27,7 +27,7 @@
 		"vite": "^6.2.5"
 	},
 	"dependencies": {
-		"@rgglez/i18n-gettext": "^0.1.0",
+		"@rgglez/i18n-gettext": "^0.1.1",
 		"svelte-flag-icons": "^2.0.1",
 		"@rgglez/svelte-i18n-gettext": "file:.."
 	}

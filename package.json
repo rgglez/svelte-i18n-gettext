@@ -30,6 +30,6 @@
   "dependencies": {
     "commander": "^11.1.0",
     "gettext-parser": "^7.0.1",
-    "@rgglez/i18n-gettext": "^0.1.0"
+    "@rgglez/i18n-gettext": "^0.1.1"
   }
 }

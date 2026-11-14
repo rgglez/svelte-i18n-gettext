@@ -5,7 +5,7 @@
     "": {
       "name": "example",
       "dependencies": {
-        "@rgglez/i18n-gettext": "^0.1.0",
+        "@rgglez/i18n-gettext": "^0.1.1",
         "@rgglez/svelte-i18n-gettext": "file:..",
         "svelte-flag-icons": "^2.0.1",
       },
@@ -121,9 +121,9 @@
 
     "@postalsys/gettext": ["@postalsys/gettext@4.1.1", "", {}, "sha512-kOK8LVJ5imGo9cyR6td98OwSfMX/mtcoHiJ8Z3dCsEowkbbE6xmooVs9EYO4ZknQ7m9TkoGcMbUVY2UNH5XTqg=="],
 
-    "@rgglez/i18n-gettext": ["@rgglez/i18n-gettext@0.1.0", "", { "dependencies": { "@postalsys/gettext": "^4.1.1", "sprintf-js": "^1.1.3" } }, "sha512-ijE6ljWUTvE+gEYeswBnhc3gygHi1hMLl53J+6u9sj3ABnvjxQpwWcGwnihqylsZr8ZspgWRLB2WhR4OLipNVg=="],
+    "@rgglez/i18n-gettext": ["@rgglez/i18n-gettext@0.1.1", "", { "dependencies": { "@postalsys/gettext": ">=4.1.1 <4.3.0", "sprintf-js": "^1.1.3" } }, "sha512-kL6ClJ+CvjufsGtP7R7KbSfOkHB1w4epy41w6+jJ0Ybhp4akF6BtstzH6frOfCpGboXffzpm/XGSOgOvk05n6A=="],
 
-    "@rgglez/svelte-i18n-gettext": ["@rgglez/svelte-i18n-gettext@file:..", { "dependencies": { "@rgglez/i18n-gettext": "^0.1.0", "commander": "^11.1.0", "gettext-parser": "^7.0.1" } }],
+    "@rgglez/svelte-i18n-gettext": ["@rgglez/svelte-i18n-gettext@file:..", { "dependencies": { "@rgglez/i18n-gettext": "^0.1.1", "commander": "^11.1.0", "gettext-parser": "^7.0.1" } }],
 
     "@rollup/rollup-android-arm-eabi": ["@rollup/rollup-android-arm-eabi@4.57.1", "", { "os": "android", "cpu": "arm" }, "sha512-A6ehUVSiSaaliTxai040ZpZ2zTevHYbvu/lDoeAteHI8QnaosIzm4qwtezfRg1jOYaUmnzLX1AOD6Z+UJjtifg=="],
 
